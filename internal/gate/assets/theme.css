@@ -1,0 +1,132 @@
+/*
+ * Lumen theme for DeepSeek Harness.
+ *
+ * DSH paints everything from --dsw-* tokens. Its neutrals are a cool
+ * "neutral-bluish" scale and its accent is the "deepseek"/"blue" scale.
+ * Replacing those static scales with warm cream→cocoa neutrals and a sunny
+ * apricot accent recolors the whole app, light and dark, without touching
+ * DSH's code. Brand elements are hidden and replaced with the Lumen eye.
+ */
+
+html:root, html body, html body[data-ds-dark-theme] {
+  /* warm neutrals: cream (00) → deep cocoa (1000) */
+  --dsw-static-neutral-bluish-00: #fffdf9 !important;
+  --dsw-static-neutral-bluish-50: #fff8f1 !important;
+  --dsw-static-neutral-bluish-55: #fff5ec !important;
+  --dsw-static-neutral-bluish-60: #fef2e7 !important;
+  --dsw-static-neutral-bluish-75: #fdede1 !important;
+  --dsw-static-neutral-bluish-90: #fbe8db !important;
+  --dsw-static-neutral-bluish-100: #f9e3d4 !important;
+  --dsw-static-neutral-bluish-150: #f5dbca !important;
+  --dsw-static-neutral-bluish-200: #efcfbc !important;
+  --dsw-static-neutral-bluish-300: #e2bea8 !important;
+  --dsw-static-neutral-bluish-310: #dbb7a2 !important;
+  --dsw-static-neutral-bluish-400: #c29e89 !important;
+  --dsw-static-neutral-bluish-500: #a58371 !important;
+  --dsw-static-neutral-bluish-600: #896a5b !important;
+  --dsw-static-neutral-bluish-700: #6a4f44 !important;
+  --dsw-static-neutral-bluish-750: #4b3631 !important;
+  --dsw-static-neutral-bluish-800: #3b2b28 !important;
+  --dsw-static-neutral-bluish-850: #2f2220 !important;
+  --dsw-static-neutral-bluish-875: #271c1a !important;
+  --dsw-static-neutral-bluish-900: #201715 !important;
+  --dsw-static-neutral-bluish-950: #1b1311 !important;
+  --dsw-static-neutral-bluish-1000: #160f0d !important;
+
+  /* accent: sunny apricot / peach (was DeepSeek blue) */
+  --dsw-static-deepseek-50: #fff4e8 !important;
+  --dsw-static-deepseek-100: #ffead6 !important;
+  --dsw-static-deepseek-200: #ffd9b5 !important;
+  --dsw-static-deepseek-300: #ffc08a !important;
+  --dsw-static-deepseek-400: #ffa35c !important;
+  --dsw-static-deepseek-450: #ff9446 !important;
+  --dsw-static-deepseek-500: #f57f2e !important;
+  --dsw-static-deepseek-600: #dd6b22 !important;
+  --dsw-static-deepseek-800: #94441a !important;
+  --dsw-static-deepseek-900: #6a3214 !important;
+
+  --dsw-static-blue-50: #fff4ec !important;
+  --dsw-static-blue-75: #ffeee2 !important;
+  --dsw-static-blue-100: #ffe5d4 !important;
+  --dsw-static-blue-300: #ffbe92 !important;
+  --dsw-static-blue-400: #ff9f68 !important;
+  --dsw-static-blue-450: #ff8f55 !important;
+  --dsw-static-blue-500: #fa7d47 !important;
+  --dsw-static-blue-600: #e66935 !important;
+  --dsw-static-blue-800: #ad4922 !important;
+  --dsw-static-blue-900: #793316 !important;
+  --dsw-static-blue-950: #582410 !important;
+
+  --lumen-sun: linear-gradient(135deg, #ffc56b 0%, #ff9a5a 55%, #ff7a7a 100%);
+  --lumen-mark: url("/lumen/assets/mark.svg");
+}
+
+/* Primary actions become sunny instead of black/white. */
+html body:not([data-ds-dark-theme]) {
+  --dsw-alias-brand-primary: #f57f2e !important;
+  --dsw-alias-button-primary-hover: #e86f22 !important;
+  --dsw-alias-label-primary-foreground: #fffdf9 !important;
+}
+html body[data-ds-dark-theme] {
+  --dsw-alias-brand-primary: #ff9a5a !important;
+  --dsw-alias-button-primary-hover: #ffad74 !important;
+  --dsw-alias-label-primary-foreground: #1b1311 !important;
+}
+
+/* A soft sunrise glow behind the app. */
+html body:not([data-ds-dark-theme]) {
+  background-image:
+    radial-gradient(60vmax 40vmax at 100% -10%, #ffe2c2aa, transparent 60%),
+    radial-gradient(50vmax 35vmax at -10% 110%, #ffd3d0aa, transparent 60%) !important;
+  background-attachment: fixed !important;
+}
+html body[data-ds-dark-theme] {
+  background-image:
+    radial-gradient(60vmax 40vmax at 100% -10%, #ff9a5a1f, transparent 60%),
+    radial-gradient(50vmax 35vmax at -10% 110%, #ff7a7a18, transparent 60%) !important;
+  background-attachment: fixed !important;
+}
+
+/* ---- Branding: hide DSH marks, show the Lumen eye ---------------------- */
+
+/* Sidebar brand mark → Lumen eye */
+[class*="_brandMark"] {
+  background: var(--lumen-mark) center / contain no-repeat !important;
+  min-width: 22px; min-height: 22px;
+}
+[class*="_brandMark"] > *, [class*="_brandMark"] svg, [class*="_brandMark"] img { visibility: hidden !important; }
+
+/* Sidebar brand name → "Lumen" */
+[class*="_brandName"], [class*="_fallbackBrandName"], [class*="_localBuildBrand"] {
+  font-size: 0 !important; letter-spacing: 0 !important;
+}
+[class*="_brandName"]::after, [class*="_fallbackBrandName"]::after {
+  content: "Lumen"; font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+  background: var(--lumen-sun); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+[class*="_localBuildBrand"]::after { content: none !important; }
+
+/* Home hero fish → a calm, breathing Lumen eye */
+[class*="_fish"], [class*="_fishHitbox"] { visibility: hidden !important; }
+[class*="_hero"]:has([class*="_fish"])::before {
+  content: ""; display: block; width: 64px; height: 64px; margin: 0 auto 8px;
+  background: var(--lumen-mark) center / contain no-repeat;
+  filter: drop-shadow(0 6px 18px #ff9a5a66);
+  animation: lumen-breathe 4.5s ease-in-out infinite;
+}
+@keyframes lumen-breathe { 50% { transform: scale(1.06); filter: drop-shadow(0 8px 26px #ff9a5a99); } }
+
+/* "Working…" whale animation → a pulsing sun dot */
+[class*="_runningWhaleAnimated"], [class*="_runningWhaleStill"] {
+  background: var(--lumen-mark) center / contain no-repeat !important;
+  animation: lumen-pulse 1.4s ease-in-out infinite;
+}
+[class*="_runningWhaleAnimated"] > *, [class*="_runningWhaleStill"] > * { visibility: hidden !important; }
+@keyframes lumen-pulse { 50% { opacity: .45; transform: scale(.9); } }
+
+/* Decorative canvases (the click-triggered whale) are removed by rebrand.js. */
+canvas[data-lumen-hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="_hero"]::before, [class*="_runningWhale"] { animation: none !important; }
+}

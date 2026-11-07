@@ -1,0 +1,14 @@
+{
+  "name": "Lumen",
+  "short_name": "Lumen",
+  "description": "Your personal AI agent, wherever you go.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8f0",
+  "theme_color": "#ff9a5a",
+  "icons": [
+    { "src": "/lumen/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

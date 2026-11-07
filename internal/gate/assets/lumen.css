@@ -1,0 +1,69 @@
+/* Lumen gate pages (login, starting). Sunny and peachy; warm cocoa in dark mode. */
+:root {
+  --bg: #fff8f0; --ink: #3a2622; --muted: #8a6656; --card: rgba(255, 253, 249, .72);
+  --line: rgba(160, 90, 50, .14); --field: rgba(255, 255, 255, .7);
+  --a1: #ffc56b; --a2: #ff9a5a; --a3: #ff7a7a; --bad: #d4483b; --glow: .55;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1311; --ink: #fbeee4; --muted: #c4a493; --card: rgba(39, 28, 26, .7);
+    --line: rgba(255, 190, 140, .12); --field: rgba(255, 255, 255, .05); --bad: #ff8a7a; --glow: .28;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); overflow-x: hidden;
+  font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* warm, drifting light */
+.sky { position: fixed; inset: 0; z-index: 0; overflow: hidden; filter: blur(70px); opacity: var(--glow); }
+.sky span { position: absolute; border-radius: 50%; animation: drift 24s ease-in-out infinite alternate; }
+.sky span:nth-child(1) { background: var(--a1); width: 55vmax; height: 55vmax; top: -22vmax; right: -14vmax; }
+.sky span:nth-child(2) { background: var(--a3); width: 45vmax; height: 45vmax; bottom: -20vmax; left: -14vmax; animation-delay: -8s; }
+.sky span:nth-child(3) { background: var(--a2); width: 30vmax; height: 30vmax; top: 40%; left: 45%; animation-delay: -15s; opacity: .7; }
+@keyframes drift { to { transform: translate(-5vmax, 4vmax) scale(1.1); } }
+@media (prefers-reduced-motion: reduce) { .sky span, .eye { animation: none !important; } }
+
+.center { position: relative; z-index: 1; min-height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 24px 16px; gap: 18px; }
+.card {
+  width: min(400px, 100%); padding: 34px 28px 26px; border-radius: 28px; text-align: center;
+  background: var(--card); border: 1px solid var(--line);
+  backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 30px 80px rgba(160, 80, 40, .18);
+}
+.eye {
+  width: 54px; height: 82px; margin: 0 auto 14px; display: block;
+  filter: drop-shadow(0 10px 24px rgba(255, 140, 80, .45));
+  animation: breathe 4.5s ease-in-out infinite;
+}
+@keyframes breathe { 50% { transform: scale(1.05); filter: drop-shadow(0 12px 34px rgba(255, 140, 80, .65)); } }
+h1 { margin: 0; font-size: 36px; letter-spacing: -.02em;
+  background: linear-gradient(100deg, #f08a2a, var(--a2) 45%, var(--a3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tagline, .muted { color: var(--muted); margin: 6px 0 22px; }
+
+.field { display: block; text-align: left; font-size: 13px; color: var(--muted); font-weight: 600; }
+.field input {
+  width: 100%; margin-top: 6px; padding: 13px 14px; font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--field); border: 1px solid var(--line); border-radius: 14px; outline: none;
+}
+.field input:focus { border-color: var(--a2); box-shadow: 0 0 0 4px rgba(255, 154, 90, .22); }
+button {
+  width: 100%; margin-top: 14px; padding: 13px; border: 0; border-radius: 14px; cursor: pointer;
+  font: inherit; font-weight: 700; color: #3a1f14;
+  background: linear-gradient(100deg, var(--a1), var(--a2) 60%, var(--a3));
+  box-shadow: 0 12px 30px rgba(255, 130, 80, .35); transition: transform .15s, filter .15s;
+}
+button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.error { color: var(--bad); font-size: 14px; font-weight: 600; margin: 10px 0 0; }
+
+.badge { display: flex; gap: 10px; align-items: flex-start; text-align: left; margin-top: 22px; padding: 12px 14px;
+  border-radius: 14px; font-size: 13px; color: var(--muted); background: var(--field); border: 1px solid var(--line); }
+.badge b { color: var(--ink); }
+.lock { font-size: 18px; line-height: 1.2; }
+.foot { color: var(--muted); font-size: 12px; opacity: .85; text-align: center; }

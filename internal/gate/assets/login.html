@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff9a5a">
+<title>Lumen</title>
+<link rel="icon" href="/lumen/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/lumen/assets/lumen.css">
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span></span><span></span><span></span></div>
+<main class="center">
+  <form class="card" method="post" action="/lumen/login" autocomplete="on">
+    <img class="eye" src="/lumen/assets/mark.svg" alt="" aria-hidden="true">
+    <h1>Lumen</h1>
+    <p class="tagline">Your personal AI agent, wherever you go.</p>
+
+    <input type="hidden" name="next" value="{{.Next}}">
+    <label class="field">
+      <span>Password</span>
+      <input type="password" name="password" autocomplete="current-password" required autofocus
+             {{if .Wait}}disabled{{end}} placeholder="••••••••••">
+    </label>
+    {{if .Error}}<p class="error" role="alert">{{.Error}}{{if .Wait}} Wait about {{.Wait}}s.{{end}}</p>{{end}}
+    <button type="submit" {{if .Wait}}disabled{{end}}>Unlock</button>
+
+    <div class="badge">
+      <span class="lock">🔒</span>
+      <span><b>Private over Tor</b> · hosted on your own computer via Sol.<br>
+      No accounts, no cloud, no open ports.</span>
+    </div>
+  </form>
+  <p class="foot">Powered by Gemini · private networking by Sol</p>
+</main>
+</body>
+</html>
