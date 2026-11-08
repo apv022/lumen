@@ -42,6 +42,20 @@
     }
   }
 
+  // DSH's home-screen headline and its "Preview" badge.
+  const HERO_FROM = "Into the Unknown", HERO_TO = "What should we do today?";
+  function fixHero(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      if (n.nodeValue.trim() !== HERO_FROM) continue;
+      n.nodeValue = n.nodeValue.replace(HERO_FROM, HERO_TO);
+      const row = n.parentElement && n.parentElement.parentElement;
+      for (const el of row ? row.querySelectorAll("*") : []) {
+        if (el.children.length === 0 && el.textContent.trim() === "Preview") el.setAttribute("data-lumen-hidden-badge", "");
+      }
+    }
+  }
+
   function fixTitle() {
     if (NAME_RE.test(document.title)) document.title = document.title.replace(NAME_RE, "Lumen");
     NAME_RE.lastIndex = 0;
@@ -52,6 +66,7 @@
     queued = false;
     fixTitle();
     renameText(document.body);
+    fixHero(document.body);
     hideDecorativeCanvas(document.body);
   }
   function schedule() {

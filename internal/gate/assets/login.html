@@ -22,7 +22,7 @@
     <label class="field">
       <span>Password</span>
       <input type="password" name="password" autocomplete="current-password" required autofocus
-             {{if .Wait}}disabled{{end}} placeholder="••••••••••">
+             {{if .Wait}}disabled{{end}} placeholder="Your password">
     </label>
     {{if .Error}}<p class="error" role="alert">{{.Error}}{{if .Wait}} Wait about {{.Wait}}s.{{end}}</p>{{end}}
     <button type="submit" {{if .Wait}}disabled{{end}}>Unlock</button>

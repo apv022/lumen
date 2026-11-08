@@ -89,6 +89,16 @@ html body[data-ds-dark-theme] {
 
 /* ---- Branding: hide DSH marks, show the Lumen eye ---------------------- */
 
+/* DSH draws its logos as inline SVGs inside brand slots: hide them all. */
+[data-slot^="sidebar.brand"] svg, [class*="_brandName"] svg, [class*="_brandMark"] svg,
+[class*="_railMark"] svg, [data-slot*="rail"][data-slot*="mark"] svg { display: none !important; }
+
+/* Collapsed sidebar rail → Lumen eye */
+[class*="_railMark"] {
+  background: var(--lumen-mark) center / contain no-repeat !important;
+  min-width: 22px; min-height: 22px;
+}
+
 /* Sidebar brand mark → Lumen eye */
 [class*="_brandMark"] {
   background: var(--lumen-mark) center / contain no-repeat !important;
@@ -101,13 +111,18 @@ html body[data-ds-dark-theme] {
   font-size: 0 !important; letter-spacing: 0 !important;
 }
 [class*="_brandName"]::after, [class*="_fallbackBrandName"]::after {
-  content: "Lumen"; font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+  content: "Lumen"; font-size: 19px; line-height: 24px; font-weight: 700; letter-spacing: -.01em;
   background: var(--lumen-sun); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 [class*="_localBuildBrand"]::after { content: none !important; }
 
 /* Home hero fish → a calm, breathing Lumen eye */
-[class*="_fish"], [class*="_fishHitbox"] { visibility: hidden !important; }
+[class*="_fish"] { visibility: hidden !important; }
+[class*="_fishHitbox"] {
+  background: var(--lumen-mark) center / contain no-repeat !important;
+  animation: lumen-breathe 4.5s ease-in-out infinite;
+}
+[data-lumen-hidden-badge] { display: none !important; }
 [class*="_hero"]:has([class*="_fish"])::before {
   content: ""; display: block; width: 64px; height: 64px; margin: 0 auto 8px;
   background: var(--lumen-mark) center / contain no-repeat;
