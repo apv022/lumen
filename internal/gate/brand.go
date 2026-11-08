@@ -2,6 +2,8 @@ package gate
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"image"
 	"image/color"
 	"image/png"
@@ -52,10 +54,19 @@ var (
 	headEndRE = regexp.MustCompile(`(?i)</head>`)
 )
 
-// injection is added to every DSH HTML page.
-const injection = `<link rel="stylesheet" href="/lumen/assets/theme.css">` +
+// injection is added to every DSH HTML page. The asset URLs carry a hash of
+// their contents, so browsers that cached an older theme fetch the new one
+// as soon as Lumen is updated.
+var injection = `<link rel="stylesheet" href="/lumen/assets/theme.css?v=` + assetVersion("assets/theme.css") + `">` +
 	`<meta name="theme-color" content="#ff9a5a">` +
-	`<script src="/lumen/assets/rebrand.js" defer></script>`
+	`<script src="/lumen/assets/rebrand.js?v=` + assetVersion("assets/rebrand.js") + `" defer></script>`
+
+// assetVersion returns a short content hash of an embedded asset.
+func assetVersion(name string) string {
+	data, _ := assetFS.ReadFile(name)
+	sum := sha256.Sum256(data)
+	return hex.EncodeToString(sum[:6])
+}
 
 // rebrandHTML renames the document and injects the Lumen theme.
 func rebrandHTML(doc []byte) []byte {

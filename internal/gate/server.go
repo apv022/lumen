@@ -123,7 +123,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.logout(w, r)
 	case strings.HasPrefix(r.URL.Path, "/lumen/assets/"):
 		sub, _ := fs.Sub(assetFS, "assets")
-		w.Header().Set("Cache-Control", "public, max-age=3600")
+		// Versioned URLs (?v=hash) may be cached forever; plain ones must revalidate.
+		if r.URL.Query().Has("v") {
+			w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+		} else {
+			w.Header().Set("Cache-Control", "no-cache")
+		}
 		http.StripPrefix("/lumen/assets/", http.FileServerFS(sub)).ServeHTTP(w, r)
 	default:
 		if (r.Method == http.MethodGet || r.Method == http.MethodHead) && serveBrand(w, r) {

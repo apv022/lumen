@@ -292,7 +292,7 @@ func TestRebrandHTML(t *testing.T) {
 	if !strings.Contains(out, "<title>Lumen</title>") || strings.Contains(out, "DeepSeek") {
 		t.Fatalf("title not replaced: %s", out)
 	}
-	if !strings.Contains(out, `/lumen/assets/theme.css`) || !strings.Contains(out, `/lumen/assets/rebrand.js`) ||
+	if !strings.Contains(out, `/lumen/assets/theme.css?v=`+assetVersion("assets/theme.css")) || !strings.Contains(out, `/lumen/assets/rebrand.js`) ||
 		strings.Index(out, "theme.css") > strings.Index(out, "</head>") {
 		t.Fatalf("theme not injected into head: %s", out)
 	}
